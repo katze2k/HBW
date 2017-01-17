@@ -1,0 +1,21 @@
+// F.Katzenberger 14.01.2017
+
+common Ordner stellt die HomeMatic Wired kommunikation zur verfügung.
+Diese Dateien können unverändert für alle Devices verwendet werden.
+
+Ein Gerät ist folgend aufgebaut:
+HMWDevice (definiert in Projekt)
+ HMWModule 
+   HMWRS485 (Erstellt in Projekt durch HMWRS485.cpp + Arduino-Serial)
+ Module ID (z.B. 0x86)
+
+
+Cpp Files: (im Projekt in Source Files einfügen)
+ HMWDebug.cpp
+ HMWModule.cpp
+ HMWRS485.cpp
+
+H Files: (im Projekt in Header Files einfügen)
+ HMWDebug.h
+ HMWModule.h
+ HMWRS485.h

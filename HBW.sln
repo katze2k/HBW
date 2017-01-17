@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HBW_Sen_SC8", "HBW_Sen_SC8\HBW_Sen_SC8.vcxproj", "{A3A9FC36-B466-48F9-A612-2AA77FF3A4D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{3910A6D1-1045-485C-AA84-0CE39CE47C6F}"
+	ProjectSection(SolutionItems) = preProject
+		common\Board.txt = common\Board.txt
+		common\HMW RS485 Protokollbeschreibung.pdf = common\HMW RS485 Protokollbeschreibung.pdf
+		common\Info-how2use.txt = common\Info-how2use.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{E82B6DCF-8239-4F41-A221-104E381E1601}"
+	ProjectSection(SolutionItems) = preProject
+		common\HMWDebug.cpp = common\HMWDebug.cpp
+		common\HMWDebug.h = common\HMWDebug.h
+		common\HMWModule.cpp = common\HMWModule.cpp
+		common\HMWModule.h = common\HMWModule.h
+		common\HMWRS485.cpp = common\HMWRS485.cpp
+		common\HMWRS485.h = common\HMWRS485.h
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3A9FC36-B466-48F9-A612-2AA77FF3A4D8}.Debug|x86.ActiveCfg = Debug|Win32
+		{A3A9FC36-B466-48F9-A612-2AA77FF3A4D8}.Debug|x86.Build.0 = Debug|Win32
+		{A3A9FC36-B466-48F9-A612-2AA77FF3A4D8}.Release|x86.ActiveCfg = Release|Win32
+		{A3A9FC36-B466-48F9-A612-2AA77FF3A4D8}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E82B6DCF-8239-4F41-A221-104E381E1601} = {3910A6D1-1045-485C-AA84-0CE39CE47C6F}
+	EndGlobalSection
+EndGlobal
