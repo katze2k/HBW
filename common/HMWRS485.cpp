@@ -111,10 +111,13 @@ void HMWRS485::sendFrame(){
 //       D.h. sie wird nicht interpretiert. Die Gegenstelle sollte es dann nochmal
 //       senden, aber das ist haesslich.
 
-// warte auf busruhe bevor gesendet wird
-// wegen Rpi 14.01.2017
-	while (timelastreceive + WAITBEFORESEND >= millis()) { receive(); }
-
+#ifdef  USE_INTERFRAMESPACE
+//TODO: was ist wenn framecomplete =1 ???
+	if ((txFrameControlByte & 0x03) == 1)
+		while (timelastreceive + IFS_SHORTTIME >= millis()) { receive(); }
+	else
+		while (timelastreceive + IFS_NORMALTIME >= millis()) { receive(); }
+#endif
 // simple send for ACKs and Broadcasts
   if(txTargetAddress == 0xFFFFFFFF || ((txFrameControlByte & 0x03) == 1)) {
 	hmwdebug(F("Sending ACK or Broadcast"));
@@ -125,12 +128,13 @@ void HMWRS485::sendFrame(){
 	return;
   };
 
+// normale Frames
   unsigned long lastTry = 0;
 
   for(byte i = 0; i < 3; i++) {  // maximal 3 Versuche
     sendFrameSingle();
     lastTry = millis();
-// wait for ACK
+    // wait for ACK
     // TODO: Die Wartezeit bis die Uebertragung wiederholt wird sollte einen Zufallsanteil haben
     while(millis() - lastTry < 200) {
 // Daten empfangen (tut nichts, wenn keine Daten vorhanden)
@@ -392,7 +396,9 @@ void HMWRS485::receive(){
          }
       }
     }
+#ifdef USE_INTERFRAMESPACE
    timelastreceive = millis(); // jetzt ist das letzte byte empfangen.
+#endif
   } //while
 } // receive
 

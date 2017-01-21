@@ -7,6 +7,7 @@
  * 
  */
 //14.01.2017: warte auf busruhe vorm senden hinzugefügt // SendFrame; Recieve und Headerfile
+//21.01.2017: Interframespace vollständig implementiert mit Defines
 
 
 #ifndef HMWRS485_H_
@@ -15,7 +16,15 @@
 #include "Arduino.h"
 
 #define MAX_RX_FRAME_LENGTH 64
-#define WAITBEFORESEND 10 //xx ms nach letztem empfangenen byte darf erst gesendet werden (blockierend !!!)
+
+#define USE_INTERFRAMESPACE
+#ifdef USE_INTERFRAMESPACE
+// 1/19200 * 64 * 10 = 33ms (maximale frame länge)
+//TODO die funktion ist noch blockierend
+// Raspberry braucht ca 0.5ms zum umschalten => 2ms würde reichen, jedoch laut protokoll 7.5ms
+#define IFS_SHORTTIME 5 //zeit in ms vor ACK gesendet wird
+#define IFS_NORMALTIME 5 //zeit in ms vor normaler frame gesendet wird
+#endif
 
 // TODO: Do the device relations really belong here?
 // TODO: Wo werden die Device Relations gesetzt? Irgendwo im EEPROM?
@@ -58,7 +67,9 @@ public:
 	byte txFrameData[MAX_RX_FRAME_LENGTH];
 
 private:
-	unsigned long timelastreceive; // timestamp (millis) des letzten empfangenen byte - für senden nach busruhe
+#ifdef USE_INTERFRAMESPACE
+	unsigned long timelastreceive; // timestamp (millis) des letzten empfangenen byte
+#endif
 // Das eigentliche RS485-Interface, kann SoftSerial oder (Hardware)Serial sein
 	Stream* serial;
 // Pin-Nummer fuer "TX-Enable"

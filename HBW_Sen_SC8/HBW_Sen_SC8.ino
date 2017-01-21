@@ -375,7 +375,7 @@ void setup()
    hmwdevice.readConfig();
 
    hmwmodule = new HMWModule(&hmwdevice, &hmwrs485, MODULE_ID);
-//test kommentar
+
    hmwdebug("Huhu\n");
 
     // send announce message
