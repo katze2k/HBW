@@ -77,6 +77,7 @@
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="FHEM\hbw_sen_sc8.pm" />
     <None Include="HBW_Sen_SC8.ino">
       <FileType>CppCode</FileType>
     </None>

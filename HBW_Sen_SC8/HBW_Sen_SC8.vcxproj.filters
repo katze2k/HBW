@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="FHEM">
+      <UniqueIdentifier>{c90d833f-21bf-4c51-9a8f-ed60dbddcecd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.HBW_Sen_SC8.vsarduino.h">
@@ -44,5 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="HBW_Sen_SC8.ino" />
+    <None Include="FHEM\hbw_sen_sc8.pm">
+      <Filter>FHEM</Filter>
+    </None>
   </ItemGroup>
 </Project>

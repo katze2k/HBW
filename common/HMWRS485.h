@@ -21,7 +21,7 @@
 #ifdef USE_INTERFRAMESPACE
 // 1/19200 * 64 * 10 = 33ms (maximale frame länge)
 //TODO die funktion ist noch blockierend
-// Raspberry braucht ca 0.5ms zum umschalten => 2ms würde reichen, jedoch laut protokoll 7.5ms
+// Raspberry braucht ca 0.5ms zum umschalten => 1ms würde reichen, jedoch laut protokoll 7.5ms
 #define IFS_SHORTTIME 5 //zeit in ms vor ACK gesendet wird
 #define IFS_NORMALTIME 5 //zeit in ms vor normaler frame gesendet wird
 #endif
