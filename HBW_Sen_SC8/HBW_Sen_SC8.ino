@@ -336,6 +336,13 @@ void handleKeys() {
 				keyState[i] = 0;
 			}
 			//TODO nur bei langem drücken wird losgelassen gesendet=?=
+			// auch im .pm ein shortrelease einfügen
+			//  und 0 und 1 sind key sim events - über befehlsbyte noch zu unterscheiden
+			// 2 bit nur möglich -- 0...3
+			// 0 = losgelassen (long)
+			// 1 = double press
+			// 2 = short press
+			// 3 = long press
 		}
 	}
   }
