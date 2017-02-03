@@ -113,12 +113,12 @@ Bounce cfgbutton;
 // write config to EEPROM in a hopefully smart way
 void writeConfig(){
     byte* ptr;
-    byte data;
+//    byte data;
   // EEPROM lesen und schreiben
 
     // Testen, ob Config richtig geschrieben wird!
   ptr = (byte*)(&config.keys[0]);
-  for(int address = 0x07; address < sizeof(config); address++){
+  for(unsigned int address = 0x07; address < sizeof(config); address++){
     hmwmodule->writeEEPROM(address, *ptr);
     ptr++;
     };
@@ -159,7 +159,7 @@ class HMWDevice : public HMWDeviceBase {
     byte* ptr;
     // EEPROM lesen
     ptr = (byte*)(&config);
-    for(int address = 0; address < sizeof(config); address++){
+    for(unsigned int address = 0; address < sizeof(config); address++){
       *ptr = EEPROM.read(address + 0x01);
       ptr++;
     };
@@ -267,15 +267,15 @@ void handleButton() {
     case 2:
     case 3:
     case 4:
-      if(now - lastLEDtime > 100) {  // schnelles Blinken
+      if(millis() - lastLEDtime > 100) {  // schnelles Blinken
       digitalWrite(LED,!digitalRead(LED));
-      lastLEDtime = now;
+      lastLEDtime = millis();
       };
       break;
     case 5:
-      if(now - lastLEDtime > 750) {  // langsames Blinken
+      if(millis() - lastLEDtime > 750) {  // langsames Blinken
         digitalWrite(LED,!digitalRead(LED));
-        lastLEDtime = now;
+        lastLEDtime = millis();
       };
   }
 };

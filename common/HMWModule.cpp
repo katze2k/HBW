@@ -74,7 +74,7 @@ void HMWModule::processEvent(byte const * const frameData, byte frameDataLength,
         	// Nur wenn das zweite Zeichen auch ein "!" ist
         	// TODO: Wirklich machen, aber wie geht das?
             if(frameData[1] == '!') { 
-				_asm("  jmp 0");		// F.Katzenberger: gibt keinen ASM befehl für Reset, Watchdog zu gefährlich, einfach jmp 0				
+				asm volatile ("jmp 0");		// F.Katzenberger: gibt keinen ASM befehl für Reset, Watchdog zu gefährlich, einfach jmp 0				
 			};   //  then goto 0
             break;
          case 'A':                                                             // Announce
