@@ -1,5 +1,8 @@
 // Arduino Nano / ATmega328 board:
 https://www.arduino.cc/en/Main/ArduinoBoardNano
+16 I/O // 6 ADC davon
+1 ADC
+PWM ???
 
 IO Pins:
 0 = Rx
