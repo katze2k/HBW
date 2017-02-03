@@ -7,18 +7,18 @@
 #endif
 #include "Bounce2.h"
 
-#define DEBOUNCED_STATE 0
-#define UNSTABLE_STATE  1
-#define STATE_CHANGED   4
+#define DEBOUNCED_STATE 0 //
+#define UNSTABLE_STATE  1 // last read value
+#define STATE_CHANGED   4 // true if debounced has changed
 //TODO was ist mit 2,3 ?
 // 4 - 7 ist für BOUNCE_AUTOMOTIVE
 
 //TODO array möglichkeit um mehrere buttons mit einem interval abzufragen
 Bounce::Bounce()
-    : previous_millis(0)
-    , interval_millis(5)
-    , state(0)
-    , pin(0)
+    : previous_millis(0) //timestamp of last read in
+    , interval_millis(5)// time to read in
+    , state(0) // 8 bits of state
+    , pin(0) //ardu.addr. of pin?
 {}
 
 void Bounce::init(bool initialState) {
@@ -114,26 +114,26 @@ bool Bounce::update(bool currentState)
     // return just the sate changed bit
     return state & _BV(STATE_CHANGED);
 #elif defined BOUNCE_AUTOMOTIVE
-	// Clear Changed State Flag - will be reset if we confirm a button state change.
-	uint8_t ones, tmp;
+	// Clear Changed State Flag - will be set if needed
 	state &= ~_BV(STATE_CHANGED);
+    // time to read in ???
 	if ((unsigned long)(millis() - previous_millis) >= interval_millis) {
+		// set timestamp
 		previous_millis = millis();
-		state = ((state & 0xF0) << 1) | currentState << 4 | (state & 0x0F)
-		//count ones
-		tmp = state>>4;
-		ones = 0;
-		while (tmp)
-		{
-			ones += tmp & 0x01;
+		// Update Unstable Bit to macth readState 	//state &= ~_BV(UNSTABLE_STATE) | (currentState<<UNSTABLE_STATE);
+		if (currentState != (bool)(state & _BV(UNSTABLE_STATE))) {
+			state ^= _BV(UNSTABLE_STATE);
 		}
-		if (ones >= BOUNCE_A_TIMES_ON) && !(state & _BV(DEBOUNCED_STATE) { 
+        // build up new state by shift old values, add new one
+		state = ((state & 0xF0) << 1) | currentState << 4 | (state & 0x0F);
+		//check if state values are enought 1s... and old debounced was 0 => a change is there
+		if (((state & (((2^BOUNCE_A_TIMES_ON)-1)<<4))== (((2 ^ BOUNCE_A_TIMES_ON) - 1) << 4)) && !(state & _BV(DEBOUNCED_STATE))) {
 			state |= _BV(STATE_CHANGED);
 			state |= _BV(DEBOUNCED_STATE);
-		}
-		else if((4 - ones) >= BOUNCE_A_TIMES_OFF) && (state & _BV(DEBOUNCED_STATE) {
+		}//check if state values are enought 0s... and old debounced was 1 => a change is there
+		else if(!(state & ((2^BOUNCE_A_TIMES_OFF)-1)<<4) && (state & _BV(DEBOUNCED_STATE))){
 			state |= _BV(STATE_CHANGED);
-			state &= !_BV(DEBOUNCED_STATE);
+			state &= ~_BV(DEBOUNCED_STATE);
 		}
 	}
 	return state & _BV(STATE_CHANGED);
@@ -159,6 +159,11 @@ bool Bounce::update(bool currentState)
 
     return state & _BV(STATE_CHANGED);
 #endif
+}
+
+bool Bounce::istimetoupdate()
+{
+	return (bool)(((unsigned long)(millis() - previous_millis)) >= interval_millis);
 }
 
 bool Bounce::update()

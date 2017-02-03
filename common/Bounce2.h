@@ -42,8 +42,8 @@
 #define BOUNCE_AUTOMOTIVE
 #ifdef BOUNCE_AUTOMOTIVE
  //#define BOUNCE_A_TIMES 4
- #define BOUNCE_A_TIMES_ON 3
- #define BOUNCE_A_TIMES_OFF 2
+ #define BOUNCE_A_TIMES_ON 3 //min.number of 1s to get true
+ #define BOUNCE_A_TIMES_OFF 2//min.number of 0s to get false
 #endif
 
 #include <inttypes.h>
@@ -53,7 +53,7 @@ class Bounce
  public:
     // Create an instance of the bounce library
     Bounce();
-
+	void init(bool initialState);
     // Attach to a pin (and also sets initial state)
     void attach(int pin);
     
@@ -66,11 +66,14 @@ class Bounce
     // Attach with an interval
     void attachWithInterval(int pin, int mode, uint16_t interval_millis);
     
+	// check if it is time to do a update();
+	bool istimetoupdate();
+
     // Updates the pin
     // Returns 1 if the state changed
     // Returns 0 if the state did not change
     bool update();
-
+	bool update(bool currentState);
     // Returns the updated pin state
     bool read();
 

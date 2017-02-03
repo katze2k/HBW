@@ -20,7 +20,7 @@
 /* Pinbelegung:         */
 /********************************/
 
-#define BUTTON 8            // Das Bedienelement
+#define BUTTON A7            // Das Bedienelement
 #define RS485_TXEN 2        // Transmit-Enable
 
 #define In1 A0
@@ -70,6 +70,7 @@
 #include "HMWModule.h"
 // Input Module for Buttons
 #include "ClickButton.h"
+#include "Bounce2.h"
 
 #define MODULE_ID 0x86
 
@@ -107,6 +108,7 @@ ClickButton button[HMW_CONFIG_NUM_KEYS] = {
   ClickButton (In8, LOW, CLICKBTN_PULLUP)
 };
 
+Bounce cfgbutton;
 
 // write config to EEPROM in a hopefully smart way
 void writeConfig(){
@@ -194,62 +196,56 @@ void factoryReset() {
 void handleButton() {
   // langer Tastendruck (5s) -> LED blinkt hektisch
   // dann innerhalb 10s langer Tastendruck (3s) -> LED geht aus, EEPROM-Reset
-
-  static long lastTime = 0;
+	static unsigned long  lastTime;
   static byte status = 0;  // 0: normal, 1: Taste erstes mal gedr�ckt, 2: erster langer Druck erkannt
                            // 3: Warte auf zweiten Tastendruck, 4: Taste zweites Mal gedr�ckt
                            // 5: zweiter langer Druck erkannt
 
-  long now = millis();
-  boolean buttonState = !digitalRead(BUTTON);
+  if (cfgbutton.istimetoupdate()) { cfgbutton.update(analogRead(BUTTON) < 512); }
 
 
   switch(status) {
     case 0:
-      if(buttonState) {status = 1;  hmwdebug(status);}
-      lastTime = now;
+      if(cfgbutton.read()) {status = 1;  hmwdebug(status);}
+      lastTime = millis();
       break;
     case 1:
-      if(buttonState) {   // immer noch gedrueckt
-        if(now - lastTime > 5000) {status = 2;   hmwdebug(status);}
-      }else{              // nicht mehr gedr�ckt
-      if(now - lastTime > 100)   // determine sensors and send announce on short press
-        hmwmodule->broadcastAnnounce(0);
-        status = 0;
-        hmwdebug(status);
-      };
+      if(cfgbutton.read()) {   // immer noch gedrueckt
+        if(millis() - lastTime > 5000) {status = 2;   hmwdebug(status);}
+	  }
+	  else {              // nicht mehr gedr�ckt
+	 // determine sensors and send announce on short press
+		  hmwmodule->broadcastAnnounce(0);
+		  status = 0;
+		  hmwdebug(status);
+	  }
       break;
     case 2:
-      if(!buttonState) {  // losgelassen
+      if(cfgbutton.read()) {  // losgelassen
       status = 3;
       hmwdebug(status);
-      lastTime = now;
+      lastTime = millis();
       };
       break;
     case 3:
-      // wait at least 100ms
-      if(now - lastTime < 100)
-      break;
-      if(buttonState) {   // zweiter Tastendruck
+      if(cfgbutton.read()) {   // zweiter Tastendruck
       status = 4;
       hmwdebug(status);
-      lastTime = now;
+      lastTime = millis();
       }else{              // noch nicht gedrueckt
-      if(now - lastTime > 10000) {status = 0;   hmwdebug(status);}   // give up
+      if(millis() - lastTime > 10000) {status = 0;   hmwdebug(status);}   // give up
       };
       break;
     case 4:
-      if(now - lastTime < 100) // entprellen
-            break;
-      if(buttonState) {   // immer noch gedrueckt
-        if(now - lastTime > 3000) {status = 5;  hmwdebug(status);}
+      if(cfgbutton.read()) {   // immer noch gedrueckt
+        if(millis() - lastTime > 3000) {status = 5;  hmwdebug(status);}
       }else{              // nicht mehr gedr�ckt
         status = 0;
         hmwdebug(status);
       };
       break;
     case 5:   // zweiter Druck erkannt
-      if(!buttonState) {    //erst wenn losgelassen
+      if(!cfgbutton.read()) {    //erst wenn losgelassen
       // Factory-Reset          !!!!!!  TODO: Gehoert das ins Modul?
       factoryReset();
       hmwmodule->setNewId();
@@ -361,7 +357,9 @@ void setup()
   pinMode(RS485_TXEN, OUTPUT);
   digitalWrite(RS485_TXEN, LOW);
 
-  pinMode(BUTTON, INPUT_PULLUP);
+  //pinMode(BUTTON, INPUT_PULLUP);
+  cfgbutton.init(0);
+  cfgbutton.interval(5);
   pinMode(LED, OUTPUT);
 
 #if DEBUG_VERSION == DEBUG_UNO
