@@ -201,7 +201,7 @@ void handleButton() {
                            // 3: Warte auf zweiten Tastendruck, 4: Taste zweites Mal gedr�ckt
                            // 5: zweiter langer Druck erkannt
 
-  if (cfgbutton.istimetoupdate()) { cfgbutton.update(analogRead(BUTTON) < 512); }
+  if (cfgbutton.istimetoupdate()) { cfgbutton.update(analogRead(BUTTON) < 512); } //10 bit wandler, pullup => ADC<512 ist gedrückt
 
 
   switch(status) {

@@ -27,3 +27,8 @@ IO Pins:
 19/A5 =
 A6 = (Analog Input Only)
 A7 = Config Button (Analog Input Only)
+
+https://wiki.fhem.de/wiki/HomeMatic_Namen_verstehen
+HBW-LC-Sw16 -DR
+HBW-Sen-SC16 -DR
+HBW-MOD-MDIR/TH/ LC-SWx -CV (infrarot,temp,feuchte, //licht, 4pwm out, 1 schalt ausgang, Ausgänge für lichter, digital eingang? 
