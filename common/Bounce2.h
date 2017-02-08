@@ -27,7 +27,7 @@
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 //add github: Krosik/Bounce2 (add 49d workaround) - with (unsigned long)
 //add github: florian-kuersch (enable each signal)
-//add own debug method (3 of 4 to on / 2 of 4 to off )
+//add own debounce method (3 times on / 2 times off )
 
 #ifndef Bounce2_h
 #define Bounce2_h

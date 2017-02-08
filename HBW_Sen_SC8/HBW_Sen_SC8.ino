@@ -9,11 +9,8 @@
 // - Pullup kann �ber das FHEM-Webfrontend aktiviert werden
 // - Erkennung von Doppelklicks
 // - Zus�tzliches Event beim Loslassen einer lang gedr�ckten Taste
-//TODO DeviceAdress anpassen?
-//TODO long click time ?
-//TODO von 8 auf 16 => neues Projekt !!!
-//TODO über Button neue DeviceAdresse
-//TODO config button über analog input only pin - A7 mit if analog read ???? >127
+//TODO von 8 auf 16 => neues Projekt/branche !!!
+//TODO: Softserial wird noch verwendet ???
 //*******************************************************************
 
 /********************************/
@@ -130,7 +127,7 @@ void setDefaults(){
   if(config.logging_time == 0xFF) config.logging_time = 20;
   if(config.central_address == 0xFFFFFFFF) config.central_address = 0x00000001;
   for(byte channel = 0; channel < HMW_CONFIG_NUM_KEYS; channel++){
-  if(config.keys[channel].long_press_time == 0xFF) config.keys[channel].long_press_time = 0x64;
+  if(config.keys[channel].long_press_time == 0xFF) config.keys[channel].long_press_time = 0x32;
   if(config.keys[channel].input_locked == 0xFF) config.keys[channel].input_locked = 0;
   if(config.keys[channel].inverted == 0xFF) config.keys[channel].inverted = 0;
   if(config.keys[channel].pullup == 0xFF) config.keys[channel].pullup = 1;
@@ -201,7 +198,8 @@ void handleButton() {
                            // 3: Warte auf zweiten Tastendruck, 4: Taste zweites Mal gedr�ckt
                            // 5: zweiter langer Druck erkannt
 
-  if (cfgbutton.istimetoupdate()) { cfgbutton.update(analogRead(BUTTON) < 512); } //10 bit wandler, pullup => ADC<512 ist gedrückt
+  if (cfgbutton.istimetoupdate()) {
+	  cfgbutton.update(analogRead(BUTTON) < (uint16_t)512); } //10 bit wandler, pullup => ADC<512 ist gedrückt
 
 
   switch(status) {
@@ -221,7 +219,7 @@ void handleButton() {
 	  }
       break;
     case 2:
-      if(cfgbutton.read()) {  // losgelassen
+      if(!cfgbutton.read()) {  // losgelassen
       status = 3;
       hmwdebug(status);
       lastTime = millis();
@@ -253,6 +251,9 @@ void handleButton() {
       hmwdebug(status);
       }
       break;
+	default:
+		status = 0;
+		break;
   }
 
   // control LED
@@ -357,7 +358,8 @@ void setup()
   pinMode(RS485_TXEN, OUTPUT);
   digitalWrite(RS485_TXEN, LOW);
 
-  //pinMode(BUTTON, INPUT_PULLUP);
+  pinMode(BUTTON, INPUT);
+  analogReference(DEFAULT);
   cfgbutton.init(0);
   cfgbutton.interval(5);
   pinMode(LED, OUTPUT);

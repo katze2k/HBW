@@ -1,16 +1,16 @@
 // Please read Bounce2.h for information about the liscence and authors
 
-#if defined(ARDUINO) && ARDUINO >= 100
+//#if defined(ARDUINO) && ARDUINO >= 100
 #include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
+//#else
+//#include "WProgram.h"
+//#endif
 #include "Bounce2.h"
 
 #define DEBOUNCED_STATE 0 //
 #define UNSTABLE_STATE  1 // last read value
-#define STATE_CHANGED   4 // true if debounced has changed
-//TODO was ist mit 2,3 ?
+#define STATE_CHANGED   3 // true if debounced has changed
+//Bit 2 zur zeit nicht genutzt
 // 4 - 7 ist für BOUNCE_AUTOMOTIVE
 
 //TODO array möglichkeit um mehrere buttons mit einem interval abzufragen
@@ -125,13 +125,13 @@ bool Bounce::update(bool currentState)
 			state ^= _BV(UNSTABLE_STATE);
 		}
         // build up new state by shift old values, add new one
-		state = ((state & 0xF0) << 1) | currentState << 4 | (state & 0x0F);
-		//check if state values are enought 1s... and old debounced was 0 => a change is there
-		if (((state & (((2^BOUNCE_A_TIMES_ON)-1)<<4))== (((2 ^ BOUNCE_A_TIMES_ON) - 1) << 4)) && !(state & _BV(DEBOUNCED_STATE))) {
+		state = (((state & 0xE0) >> 1) | (currentState << 7)) | (state & 0x0F);
+		//check if state values are n times 1s... and old debounced was 0 => a change is there
+		if ((state >= (uint8_t)~(0xFF>>BOUNCE_A_TIMES_ON))&& !(state & _BV(DEBOUNCED_STATE))){
 			state |= _BV(STATE_CHANGED);
 			state |= _BV(DEBOUNCED_STATE);
-		}//check if state values are enought 0s... and old debounced was 1 => a change is there
-		else if(!(state & ((2^BOUNCE_A_TIMES_OFF)-1)<<4) && (state & _BV(DEBOUNCED_STATE))){
+		}//check if state values are n times 0s... and old debounced was 1 => a change is there
+		else if((state <= (uint8_t)(0xFF>>BOUNCE_A_TIMES_OFF)) && (state & _BV(DEBOUNCED_STATE))){
 			state |= _BV(STATE_CHANGED);
 			state &= ~_BV(DEBOUNCED_STATE);
 		}

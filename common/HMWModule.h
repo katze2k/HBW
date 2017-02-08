@@ -13,6 +13,7 @@
 #include "Arduino.h"
 
 // TODO: Firmware/Hardware Version aus EEPROM bzw. Flash?
+// TODO: Firmware Version HByte = application LByte = HBW Modul
 #define MODULE_HARDWARE_VERSION 1
 #define MODULE_FIRMWARE_VERSION 0x0306
 
