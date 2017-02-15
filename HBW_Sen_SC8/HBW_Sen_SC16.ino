@@ -14,7 +14,7 @@
 //TODO watchdog hinzufügen ? was ist mit bootloader?
 //*******************************************************************
 
-#include "HBW_Sen_SC8.h"
+#include "HBW_Sen_SC16.h"
 
 #if DEBUG_VERSION == DEBUG_UNO || DEBUG_VERSION == DEBUG_UNIV
   #include <SoftwareSerial.h>	  // TODO: Eigene SoftwareSerial

@@ -63,7 +63,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>Y:\arduino-1.6.7\libraries\ClickButton;Y:\arduino-1.6.7\libraries\ClickButton\utility;Y:\arduino-1.6.7\hardware\arduino\avr\libraries\EEPROM;Y:\arduino-1.6.7\hardware\arduino\avr\libraries\EEPROM\utility;Y:\arduino-1.6.7\hardware\arduino\avr\libraries\SoftwareSerial;Y:\arduino-1.6.7\hardware\arduino\avr\libraries\SoftwareSerial\utility;Y:\arduino-1.6.7\libraries;Y:\arduino-1.6.7\hardware\arduino\avr\libraries;C:\Users\felix.Laptop\Documents\Arduino\libraries;Y:\arduino-1.6.7\hardware\arduino\avr\cores\arduino;Y:\arduino-1.6.7\hardware\arduino\avr\variants\eightanaloginputs;C:\Users\felix.Laptop\documents\visual studio 2015\Projects\HBW\HBW_Sen_SC8;Y:\arduino-1.6.7\hardware\tools\avr/avr/include/;Y:\arduino-1.6.7\hardware\tools\avr//avr/include/avr/;Y:\arduino-1.6.7\hardware\tools\avr/lib\gcc\avr\4.8.1\include;C:\Users\felix.Laptop\documents\visual studio 2015\Projects\HBW\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Y:\arduino-1.6.7\libraries\ClickButton;Y:\arduino-1.6.7\hardware\arduino\avr\libraries\EEPROM;Y:\arduino-1.6.7\hardware\arduino\avr\libraries\SoftwareSerial;Y:\arduino-1.6.7\libraries\ClickButton\utility;Y:\arduino-1.6.7\hardware\arduino\avr\libraries\EEPROM\utility;Y:\arduino-1.6.7\hardware\arduino\avr\libraries\SoftwareSerial\utility;Y:\arduino-1.6.7\libraries;Y:\arduino-1.6.7\hardware\arduino\avr\libraries;C:\Users\felix.Laptop\Documents\Arduino\libraries;Y:\arduino-1.6.7\hardware\arduino\avr\cores\arduino;Y:\arduino-1.6.7\hardware\arduino\avr\variants\eightanaloginputs;C:\Users\felix.Laptop\documents\visual studio 2015\Projects\HBW\HBW_Sen_SC8;Y:\arduino-1.6.7\hardware\tools\avr/avr/include/;Y:\arduino-1.6.7\hardware\tools\avr//avr/include/avr/;Y:\arduino-1.6.7\hardware\tools\avr/lib\gcc\avr\4.8.1\include;C:\Users\felix.Laptop\documents\visual studio 2015\Projects\HBW\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>C:\Users\felix.Laptop\documents\visual studio 2015\Projects\HBW\HBW_Sen_SC8\__vm\.HBW_Sen_SC8.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;F_CPU=16000000L;ARDUINO=10607;ARDUINO_AVR_NANO;ARDUINO_ARCH_AVR;__cplusplus=201103L;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -93,7 +93,6 @@
     <ClInclude Include="..\common\HMWRS485.h" />
     <ClInclude Include="HBW_Sen_SC16.h" />
     <ClInclude Include="__vm\.HBW_Sen_SC16.vsarduino.h" />
-    <ClInclude Include="__vm\.HBW_Sen_SC8.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\Bounce2.cpp" />
