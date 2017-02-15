@@ -12,10 +12,10 @@
 
 #include "Arduino.h"
 
-// TODO: Firmware/Hardware Version aus EEPROM bzw. Flash?
-// TODO: Firmware Version HByte = application LByte = HBW Modul
+//TODO: Bump Firmware Version on Release
+//TODO: Hardware ins EEprom an address 0x00 ;)
 #define MODULE_HARDWARE_VERSION 1
-#define MODULE_FIRMWARE_VERSION 0x0306
+#define MODULE_FIRMWARE_VERSION 0x36
 
 
 // Abstrakte Basisklasse mit Callbacks aus dem Modul
@@ -28,7 +28,7 @@ class HMWDeviceBase {
 
 class HMWModule : public HMWModuleBase {
 public:
-	HMWModule(HMWDeviceBase*, HMWRS485*, byte); // rs485, device type
+	HMWModule(HMWDeviceBase*, HMWRS485*, byte, const byte); // rs485, device type
 	virtual ~HMWModule();
 
 	virtual void processEvent(byte const * const frameData, byte frameDataLength, boolean isBroadcast = false);
@@ -38,6 +38,7 @@ public:
 	void sendInfoMessage(byte, byte *ptr, byte length, unsigned long);   // channel, info, target address
 
 	byte deviceType;        // device type wird im Konstruktor vom Device.Setup() festgelegt
+    byte deviceFWVersion;  // device FW Version , könnte n const sein
 
 	// write to EEPROM, but only if not "value" anyway
 	// the uppermost 4 bytes are reserved for the device address and can only be changed if privileged = true

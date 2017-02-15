@@ -8,6 +8,13 @@
 #ifndef HMWDEBUG_H_
 #define HMWDEBUG_H_
 
+//TODO bei DEBUG_NONE sollten alle hmwdebugs ersetzt werden.....
+//#if DEBUG_VERSION == DEBUG_NONE
+// #define hmwdebug(x) hmwdebug2 x
+//#else
+//#define hmwdebug(x)
+//#endif
+
 #include "Arduino.h"
 
 extern Stream* hmwdebugstream;

@@ -15,11 +15,12 @@
 
 #include <EEPROM.h>
 
-HMWModule::HMWModule(HMWDeviceBase* _device, HMWRS485* _hmwrs485, byte _deviceType) {
+HMWModule::HMWModule(HMWDeviceBase* _device, HMWRS485* _hmwrs485, byte _deviceType, const byte _deviceFWVersion) {
   device = _device;
   hmwrs485 = _hmwrs485;
   hmwrs485->module = this;   // fuer callbacks von Kommunikationsschicht
   deviceType = _deviceType;
+  deviceFWVersion = _deviceFWVersion;
   // TODO: Entscheiden, ob die device address zum Protokoll oder zum Modul gehoert
   readAddressFromEEPROM();
 }
@@ -62,7 +63,7 @@ void HMWModule::processEvent(byte const * const frameData, byte frameDataLength,
       sendAck = 1;
       switch(frameData[0]){
          case '@':                                      // HBW-specifics
-           if(frameData[1] == 'a' && frameDataLength == 6) {  // "a" -> address set
+           if(frameData[1] == 'a' && frameDataLength == 6) {  // "a" -> address set @a
         	 // TODO: Avoid "central" addresses (like 0000...)
         	 for(byte i = 0; i < 4; i++)
         	   writeEEPROM(E2END - 3 + i, frameData[i + 2], true);
@@ -151,11 +152,9 @@ void HMWModule::processEvent(byte const * const frameData, byte frameDataLength,
          case 'v':                                                               // get firmware version
             hmwdebug(F("Firmware Version"));
             sendAck = 0;
-			//TODO: Firmware besteht aus common HBW Interface + Applikation
-			// Hardware Version sollte ins EE ?
 			// Softwareversion (high byte im Device und low byte im HMW Modul)
-            hmwrs485->txFrameData[0] = MODULE_FIRMWARE_VERSION / 0x100;
-            hmwrs485->txFrameData[1] = MODULE_FIRMWARE_VERSION & 0xFF;
+            hmwrs485->txFrameData[0] = deviceFWVersion;
+            hmwrs485->txFrameData[1] = MODULE_FIRMWARE_VERSION;
             hmwrs485->txFrameDataLength = 2;
             break;
          case 'x':                                                               // Level set
@@ -255,8 +254,8 @@ void HMWModule::processEventKey(){
       hmwrs485->txFrameData[1] = channel;      // Sensornummer
       hmwrs485->txFrameData[2] = deviceType;
       hmwrs485->txFrameData[3] = 0; // MODULE_HARDWARE_VERSION;
-      hmwrs485->txFrameData[4] = MODULE_FIRMWARE_VERSION / 0x100;
-      hmwrs485->txFrameData[5] = MODULE_FIRMWARE_VERSION & 0xFF;
+	  hmwrs485->txFrameData[4] = deviceFWVersion;
+      hmwrs485->txFrameData[5] = MODULE_FIRMWARE_VERSION;
       determineSerial(hmwrs485->txFrameData + 6);
       hmwrs485->sendFrame();
    };
@@ -294,6 +293,11 @@ void HMWModule::processEventKey(){
        if(!privileged && (address > E2END - 4))
     	 return;
        // write if not anyway the same value
+	   hmwdebug(F("Addr:"));
+	   hmwdebug(address, HEX);
+	   hmwdebug(F(" Val:"));
+	   hmwdebug(value, HEX);
+	   hmwdebug(F("\n"));
    	   if(value != EEPROM.read(address))
    		 EEPROM.write(address, value);
      };
@@ -316,7 +320,7 @@ void HMWModule::processEventKey(){
      void HMWModule::setNewId(){
        if (hmwrs485->txSenderAddress == 0x42FFFFFF) {
     	 hmwrs485->txSenderAddress = millis();
-    	 hmwdebug("Setting new ID:");
+    	 hmwdebug(F("Setting new ID:"));
     	 hmwdebug(hmwrs485->txSenderAddress);
     	 for(byte i = 0; i < 4; i++)
     	   writeEEPROM(E2END - i, hmwrs485->txSenderAddress >> (i*8), true);

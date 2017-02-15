@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{E82B6D
 	ProjectSection(SolutionItems) = preProject
 		common\Bounce2.cpp = common\Bounce2.cpp
 		common\Bounce2.h = common\Bounce2.h
+		common\E2map.txt = common\E2map.txt
 		common\HMWDebug.cpp = common\HMWDebug.cpp
 		common\HMWDebug.h = common\HMWDebug.h
 		common\HMWModule.cpp = common\HMWModule.cpp

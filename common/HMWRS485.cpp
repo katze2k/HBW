@@ -60,7 +60,7 @@ void HMWRS485::loop() {
   if(frameComplete) {
 	frameComplete = 0;   // only once
     if(targetAddress == txSenderAddress || targetAddress == 0xFFFFFFFF){
-      hmwdebug(F("parsing from loop..."));
+      hmwdebug(F("parsing from loop...\n"));
 	  if(parseFrame())
 	    module->processEvent(frameData, frameDataLength, (targetAddress == 0xFFFFFFFF));
 	}
@@ -82,7 +82,7 @@ boolean HMWRS485::parseFrame () { // returns true, if event needs to be processe
     // Absenderadresse mus stimmen
     if(seqNumReceived == seqNumSent && senderAddress == txTargetAddress) {
       // "ackwait" zuruecksetzen (ansonsten wird auf den Timeout vertraut)
-      hmwdebug(F("Received ACK"));
+      hmwdebug(F("Received ACK\n"));
       frameStatus &= ~FRAME_SENTACKWAIT;
     }
   }
@@ -120,7 +120,7 @@ void HMWRS485::sendFrame(){
 #endif
 // simple send for ACKs and Broadcasts
   if(txTargetAddress == 0xFFFFFFFF || ((txFrameControlByte & 0x03) == 1)) {
-	hmwdebug(F("Sending ACK or Broadcast"));
+	hmwdebug(F("Sending ACK or Broadcast:"));
 	hmwdebug(txFrameControlByte,HEX);
 	sendFrameSingle();
 	// TODO: nicht besonders schoen, zuerst ackwait zu setzen und dann wieder zu loeschen

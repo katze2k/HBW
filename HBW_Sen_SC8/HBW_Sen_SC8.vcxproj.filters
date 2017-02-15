@@ -18,12 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="__vm\.HBW_Sen_SC8.vsarduino.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HBW_Sen_SC8.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\HMWDebug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -34,6 +28,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\common\Bounce2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HBW_Sen_SC16.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="__vm\.HBW_Sen_SC16.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="__vm\.HBW_Sen_SC8.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -52,9 +55,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="HBW_Sen_SC8.ino" />
-    <None Include="FHEM\hbw_sen_sc8.pm">
+    <None Include="FHEM\hbw_sen_sc16.pm">
       <Filter>FHEM</Filter>
     </None>
+    <None Include="HBW_Sen_SC16.ino" />
   </ItemGroup>
 </Project>
