@@ -1,16 +1,17 @@
 //*******************************************************************
 //
-// HBW-Sen-SC8.cpp
+// HBW-Sen-SC16.cpp
 //
 // Homematic Wired Hombrew Hardware
 // Arduino Nano als Homematic-Device
-// HBW-Sen-SC8 zum Einlesen von 8 Tastern
+// HBW-Sen-SC16 zum Einlesen von 16 Tastern / Schaltern / (Tür)kontakten
 // - Active HIGH oder LOW kann �ber das FHEM-Webfrontend konfiguriert werden
 // - Pullup kann �ber das FHEM-Webfrontend aktiviert werden
 // - Erkennung von Doppelklicks
 // - Zus�tzliches Event beim Loslassen einer lang gedr�ckten Taste
-//TODO: Softserial wird noch verwendet ???
-//TODO auslastung über pin toogeln ermitteln.
+// - konfigurierbare doubleclick zeit
+// - konfigurierbare long click zeit
+// - taster durch lock sperrbar
 //TODO watchdog hinzufügen ? was ist mit bootloader?
 //*******************************************************************
 
@@ -416,4 +417,7 @@ void loop()
   // Tasten
   handleKeys();
 
+  #ifdef DEBUG_LOAD //Ermittlung der Zykluslaufzeit
+    digitalWrite(LED, !digitalRead(LED));
+  #endif
 };

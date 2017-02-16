@@ -36,11 +36,12 @@
 #define In15 4
 #define In16 3
 
-#define MODULE_ID 0x86
+#define MODULE_ID 0x7F // change from 0x86(SC8) to 0x7F (SC16)
 
 #define CHANNEL_IO_COUNT 16
 #define CHANNEL_IO_BYTES 2 //CHANNEL_IO_COUNT / 8
 
+//#define DEBUG_LOAD	   // Ermittlung der Auslastung bzw. Zykluslaufzeit
 
 #define DEBUG_NONE 0   // Kein Debug-Ausgang, RS485 auf Hardware-Serial
 #define DEBUG_UNO 1    // Hardware-Serial ist Debug-Ausgang, RS485 per Soft auf pins 5/6
@@ -51,13 +52,13 @@
 #if DEBUG_VERSION == DEBUG_UNO
 #define RS485_RXD 4
 #define RS485_TXD 3
-#define LED 13        // Signal-LED
+#define LED LED_BUILTIN        // Signal-LED
 #elif DEBUG_VERSION == DEBUG_UNIV
 #define DEBUG_RXD 5
 #define DEBUG_TXD 6
-#define LED 13
+#define LED LED_BUILTIN
 #else
-#define LED 13         // Signal-LED
+#define LED LED_BUILTIN         // Signal-LED
 #endif
 
 // Konfigurationsdaten als C++-Struktur

@@ -22,13 +22,11 @@
 // 1/19200 * 64 * 10 = 33ms (maximale frame länge)
 //TODO die funktion ist noch blockierend
 // Raspberry braucht ca 0.5ms zum umschalten => 1ms würde reichen, jedoch laut protokoll 7.5ms
-#define IFS_SHORTTIME 5 //zeit in ms vor ACK gesendet wird
+#define IFS_SHORTTIME 3 //zeit in ms vor ACK gesendet wird
 #define IFS_NORMALTIME 5 //zeit in ms vor normaler frame gesendet wird
 #endif
 
-// TODO: Do the device relations really belong here?
-// TODO: Wo werden die Device Relations gesetzt? Irgendwo im EEPROM?
-// #define MAX_DEVICE_RELATIONS 100  TODO: loeschen, wenn nicht gebraucht
+//TODO Device Relations einfügen (direct-link) für peering
 
 // Abstrakte Basisklasse mit Callbacks fuer Verwender
 class HMWModuleBase {

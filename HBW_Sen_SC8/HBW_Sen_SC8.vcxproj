@@ -93,6 +93,7 @@
     <ClInclude Include="..\common\HMWRS485.h" />
     <ClInclude Include="HBW_Sen_SC16.h" />
     <ClInclude Include="__vm\.HBW_Sen_SC16.vsarduino.h" />
+    <ClInclude Include="__vm\.HBW_Sen_SC8.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\Bounce2.cpp" />

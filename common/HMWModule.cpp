@@ -73,10 +73,9 @@ void HMWModule::processEvent(byte const * const frameData, byte frameDataLength,
          case '!':                                                             // reset the Module
             // reset the Module jump after the bootloader
         	// Nur wenn das zweite Zeichen auch ein "!" ist
-        	// TODO: Wirklich machen, aber wie geht das?
             if(frameData[1] == '!') { 
-				asm volatile ("jmp 0");		// F.Katzenberger: gibt keinen ASM befehl für Reset, Watchdog zu gefährlich, einfach jmp 0				
-			};   //  then goto 0
+				asm volatile ("jmp 0");		// gibt keinen ASM befehl für Reset, Watchdog zu gefährlich, einfach jmp 0				
+			}; 
             break;
          case 'A':                                                             // Announce
             sendAck = 2;
@@ -119,7 +118,7 @@ void HMWModule::processEvent(byte const * const frameData, byte frameDataLength,
             break;
 
          case 'c':                                                               // Zieladresse löschen?
-            // TODO: ???
+            // TODO: direct-link
             break;
 
          case 'h':                                                               // get Module type and hardware version
@@ -138,7 +137,7 @@ void HMWModule::processEvent(byte const * const frameData, byte frameDataLength,
         	sendAck = 0;
         	break;
          case 'q':                                                               // Zieladresse hinzufügen?
-            // TODO: ???
+            // TODO: direct-link
         	break;
          case 's':                                                               // Aktor setzen
             processEventSetLevel(frameData[1], frameData[2]);
@@ -159,7 +158,7 @@ void HMWModule::processEvent(byte const * const frameData, byte frameDataLength,
             break;
          case 'x':                                                               // Level set
 			 //TODO: gleicher befehl wie s ??? Set Aktor
-            processEventSetLevel(frameData[1], frameData[2]);                                               // Install-Test TODO: ???
+            processEventSetLevel(frameData[1], frameData[2]);                    // Install-Test TODO: ???
             sendAck = 2;
             break;
 
@@ -183,8 +182,7 @@ void HMWModule::processEvent(byte const * const frameData, byte frameDataLength,
 };
 
 void HMWModule::processEventKey(){
-//key-sim-event???
-	// TODO
+	// TODO key-sim-event???
 };
 
    void HMWModule::processEventSetLevel(byte channel, unsigned int level){
@@ -207,7 +205,7 @@ void HMWModule::processEventKey(){
 
 
    void HMWModule::processEventSetLock(){
-		// TODO
+		// TODO set lock
    };
 
 
@@ -268,7 +266,7 @@ void HMWModule::processEventKey(){
 	   hmwrs485->txFrameData[0] = 0x4B;         // 'K'
 	   hmwrs485->txFrameData[1] = channel;      // Sensornummer
 	   hmwrs485->txFrameData[2] = 0;            // Zielaktor
-	   // TODO: Counter
+	   // TODO: Counter ??? keyPressNum=?
 	   hmwrs485->txFrameData[3] = pressType + (keyPressNum << 2);
 	   hmwrs485->sendFrame();
    };

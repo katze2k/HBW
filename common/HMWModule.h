@@ -13,7 +13,7 @@
 #include "Arduino.h"
 
 //TODO: Bump Firmware Version on Release
-//TODO: Hardware ins EEprom an address 0x00 ;)
+//TODO: Hardware ins EEprom an address 0x00, auf jedenfall ins device = ?
 #define MODULE_HARDWARE_VERSION 1
 #define MODULE_FIRMWARE_VERSION 0x36
 

@@ -13,7 +13,7 @@
 //Bit 2 zur zeit nicht genutzt
 // 4 - 7 ist für BOUNCE_AUTOMOTIVE
 
-//TODO array möglichkeit um mehrere buttons mit einem interval abzufragen
+
 Bounce::Bounce()
     : previous_millis(0) //timestamp of last read in
     , interval_millis(5)// time to read in
